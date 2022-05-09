@@ -1,0 +1,18 @@
+.item {
+    background: #0bd;
+    color: #fff;
+    padding: 10px;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    grid-template-rows: 200px 200px;
+    
+
+}
+
+.container:hover{
+    background: rgb(33, 0, 221);
+}
