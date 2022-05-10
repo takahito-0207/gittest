@@ -1,0 +1,63 @@
+body {
+    color: #666666;
+}
+
+h1 {
+    background-color: #999999;
+    color: #fff;
+    font-size: 24px;
+    padding: 6px;
+}
+
+
+figure {
+    background-color: #fff;
+    margin: 1px;
+    width: 300px;
+    height: 250px;
+}
+
+figure img {
+    width: 300px;
+    /* height: 200px; */
+    border: 1px solid #cccccc;
+    margin-bottom: -50px;
+
+
+}
+
+
+.container{
+    display: flex;
+    flex-direction: row;
+    margin: 30px;
+    width: 300px;
+
+}
+
+.item {
+    margin: 0 20px 0 20px;
+    line-height: 0.8em;
+
+}
+
+
+
+.item_name {
+    color: #e57f18;
+    font-size: medium;
+    line-height: 1.1em;
+}
+.item_price{
+
+
+}
+.sale_day{
+    font-size: small;
+
+}
+.sale_place{
+    font-size: small;
+
+
+}
