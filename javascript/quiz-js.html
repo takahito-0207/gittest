@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #answerA,
+        #answerB,
+        #answerC,
+        #answerD {
+            width: 200px;
+            height: 50px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid red;
+            margin: 10px
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+
+        const midashi = document.createElement("h2");
+        midashi.textContent = "見出し";
+        document.body.append(midashi);
+
+        const honbun = document.createElement("p");
+        honbun.textContent = "本文";
+        document.body.append(honbun);
+
+        const answerA = document.createElement("div");
+        answerA.textContent = "AAAA";
+        document.body.append(answerA);
+        answerA.setAttribute("id", "answerA");
+
+        const answerB = document.createElement("div");
+        answerB.textContent = "BBBB";
+        document.body.append(answerB);
+        answerB.setAttribute("id", "answerB");
+
+        const answerC = document.createElement("div");
+        answerC.textContent = "CCCC";
+        document.body.append(answerC);
+        answerC.setAttribute("id", "answerC");
+
+        const answerD = document.createElement("div");
+        answerD.textContent = "DDDD";
+        document.body.append(answerD);
+        answerD.setAttribute("id", "answerD");
+
+    </script>
+
+
+
+    <script src="quiz-js.js"></script>
+</body>
+
+</html>

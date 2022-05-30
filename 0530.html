@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hot {
+            background-color: blue;
+        }
+
+        .hotDay {
+            color: red;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div>弁当が豪勢だった</div>
+
+    <script>
+        document.querySelector('div').setAttribute('id', 'hot');
+        document.querySelector('div').setAttribute('class', 'hotDay');
+
+        document.querySelector('div').classList.add('hotHotDay');
+
+        //削除するクラスを指定する
+        document.querySelector('div').classList.remove('hotHotDay');
+
+        //classが2つ以上でも全部消す
+        document.querySelector('div').removeAttribute('class');
+
+
+        //P119
+        const whichCase = "case1";
+
+        switch (whichCase) {
+            case "case1":
+                console.log("case1節を実行しました");
+                break;
+
+            case "case2":
+                console.log("case2節を実行しました");
+                break;
+
+            default:
+                console.log("default節を実行しました");
+                break;
+        }
+
+
+        //p130
+        let i = 0;
+
+        while (i < 5) {
+            console.log(i);
+            i++;
+        }
+
+        //p133
+        for (let i = 0; i < 5; i++) {
+            console.log("for文" + i);
+        }
+
+        for (let i = 0; i < 10; i = i + 3) {
+            console.log("p134 " + i);
+        }
+
+        //p135
+        const fruitArrey = ["りんご", "メロン", "みかん"];
+
+        console.log(fruitArrey[0]);
+        console.log(fruitArrey[1]);
+        fruitArrey[0] = "ばなな";
+        console.log(fruitArrey[0]);
+        console.log(fruitArrey.length);
+        console.log(fruitArrey);
+
+        //p135
+        const numArray = [10, 20, 30];
+
+        for (let index = 0; index < numArray.length; index++) {
+            numArray[index] = numArray[index] + 10;
+        }
+        console.log("p135↓ " + numArray);
+
+        //p65
+
+        let person = {
+            name:{first:"太郎",last:"独習"},age:18};
+
+            console.log(person.age);
+    </script>
+</body>
+
+</html>
