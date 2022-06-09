@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // P176
+        // 無名関数
+        setTimeout(function(){
+            console.log("こんにちは1");
+        }, 1000);
+
+        //アロー関数
+        //通常の関数はアロー関数で置き換えられる
+        // ただし、アロー関数内ではthisが使えない
+        setTimeout(() => console.log("こんにちは2"),1000);
+
+        //setTimeout(動かしたい関数, 動くタイミング・ミリセカンド);
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.7;
+    padding: 2rem;
+}
+a {
+    color: #0bd;
+}
+.new::after{
+    content: "NEW!";
+    font-size: .75em;
+    background: #f99;
+    color: #fff;
+    padding: 5px;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+
+.mag{
+    margin: 20px;
+    padding: 10px;
+    width: 600px;
+    border: 1px solid black;
+}
+
+
+a::before{
+    padding: 0 5px;
+}
+
+/* 外部リンク */
+a[href^="http://"]::before{
+    content: url(images/link.svg);/* ^ 正規表現で前方一致 */
+}
+
+
+/* メール */
+a[href^="mailto"]::before{
+    content: url(images/email.svg);/* ^ 正規表現で前方一致 */
+}
+/* PDF */
+a[href$=".pdf"]::before{
+    content: url(images/doc.svg);/* $ 正規表現で後方一致 */
+}
+
+h1{
+    display: flex;
+    font-size: 2rem;
+}
+h1::before,h1::after{
+    flex: 1;
+    height: 2px;
+    content: '';
+    background-color: rgb(255, 49, 49);
+    position: relative;
+    top:1rem;
+}
+h1::before{
+    margin-right: 1rem;
+}
+h1::after{
+    margin-left: 1rem;
+}
