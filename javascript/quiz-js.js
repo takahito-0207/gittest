@@ -69,11 +69,11 @@ makeAnswer('answerD', 'fuseikai');
 
 // b 問題文のテキストを終了に変える
 // 指定した要素（element）.textContent で文字を変更できる
-document.getElementById('mondai').textContent = '終了';
+// document.getElementById('mondai').textContent = '終了';
 
-// aとbを組み合わせる
-// setTimeout(function () {
-//     document.getElementById('mondai').textContent = "終了";
-// }, 5000);
+aとbを組み合わせる
+setTimeout(function () {
+    document.getElementById('mondai').textContent = "終了";
+}, 5000);
 
 // document.querySelector('form').setAttribute('action','https://www.wana.com')

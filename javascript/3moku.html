@@ -14,7 +14,7 @@
 
         }
 
-        .hougan {
+        #main div {
             border: 1px solid #666666;
             margin: 2px;
         }
@@ -23,23 +23,64 @@
 
 <body>
     <div id="main">
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <!-- <div id="masu1">-</div>
+        <div id="masu2">-</div>
+        <div id="masu3">-</div>
+        <div id="masu4">-</div>
+        <div id="masu5">-</div>
+        <div id="masu6">-</div>
+        <div id="masu7">-</div>
+        <div id="masu8">-</div>
+        <div id="masu9">-</div> -->
     </div>
+    <div class="text">テキスト</div>
 
-<script>
-document.getElementsByClassName('hougan').addEventListener('click', function () {
-    this.style.backgroundColor = "yellow";
-    // this.textContent = "〇";
-})
-</script>
+    <script>
+
+        const player1 = "〇";
+        const player2 = "×";
+
+        const getMasu = document.getElementsByClassName("masu");
+        const changeMasu = Array.from(getMasu);
+        changeMasu =["1","2","3","4","5","6","7","8","9"]; 
+
+        let turn = 0;
+
+        changeMasu.forEach(function (changeMasu) {
+            changeMasu.addEventListener("click", function () {
+                console.log(changeMasu);
+                if (turn % 2 === 0) {
+                    changeMasu.style.backgroundColor = "red";
+                    changeMasu.textContent = player1;
+                    console.log("A" +turn);
+                    console.log(changeMasu[1]);
+
+                }
+
+                else {
+                    changeMasu.style.backgroundColor = "blue";
+                    changeMasu.textContent = player2;
+                    console.log("B" + turn);
+                }
+                turn++;
+
+
+            })
+            })
+
+
+
+
+    </script>
 
 
 </body>
