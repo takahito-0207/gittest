@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #main {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+
+        }
+
+        #main div {
+            border: 1px solid #666666;
+            margin: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <div class="masu">-</div>
+        <!-- <div id="masu1">-</div>
+        <div id="masu2">-</div>
+        <div id="masu3">-</div>
+        <div id="masu4">-</div>
+        <div id="masu5">-</div>
+        <div id="masu6">-</div>
+        <div id="masu7">-</div>
+        <div id="masu8">-</div>
+        <div id="masu9">-</div> -->
+    </div>
+    <div class="text">テキスト</div>
+
+    <script>
+
+        let turn = 0;
+        const player1 = "〇";
+        const player2 = "×";
+
+
+
+
+
+        // while(turn > 9){
+        //     document.getElementsByClassName("test").textContent = "おわり";
+        //     break;
+        // }if(turn % 2 === 0){
+        //     document.getElementById("me1").addEventListener("click", function () {
+        //         document.getElementById("me1").style.backgroundColor = "yellow";
+        //         document.getElementById("me1").textContent = "〇";
+
+        //     turn ++;
+
+        // }else if{
+        //     document.getElementById("me1").addEventListener("click", function () {
+        //         document.getElementById("me1").style.backgroundColor = "red";
+        //         document.getElementById("me1").textContent = "×";
+        //         turn ++;
+        // }
+
+
+
+
+        // document.getElementById("masu1").addEventListener("click", function () {
+        //     document.getElementById("masu1").style.backgroundColor = "yellow";
+        //     document.getElementById("masu1").textContent = "〇";
+        //     turn ++;
+        //     console.log(turn);
+        // })
+
+        // const getMasu = document.getElementsByClassName("masu");
+        // const changeMasu = Array.from(getMasu);
+
+const changeMasu =document.querySelectorAll("masu");
+
+
+        changeMasu.forEach(function (changeMasu) {
+            changeMasu.addEventListener("click", function () {
+                changeMasu.style.backgroundColor = "yellow";
+                changeMasu.textContent = player1;
+                turn++;
+                console.log(turn);
+    
+        })
+    })
+
+    </script>
+
+
+</body>
+
+</html>
