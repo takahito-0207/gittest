@@ -14,48 +14,15 @@
 
         }
 
-<<<<<<< HEAD
-        .hougan {
-=======
         #main div {
->>>>>>> f4e0c3f573feda893efe4339ecd6a1568399b6f6
-            border: 1px solid #666666;
-            margin: 2px;
+            border: 1px solid #999999;
+            margin: 1px;
         }
     </style>
 </head>
 
 <body>
     <div id="main">
-<<<<<<< HEAD
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-        <div class="hougan"></div>
-    </div>
-
-<script>
-
-const maru = "〇";
-const batsu = "×";
-
-document.getElementsByClassName('hougan').addEventListener('click', function () {
-                this.style.backgroundColor = "yellow";
-                this.textContent = maru;
-})
-
-
-// document.getElementById('main').addEventListener('click', function () {
-//                 this.style.backgroundColor = "yellow";
-//                 this.textContent = maru;
-// })
-</script>
-=======
         <div class="masu">-</div>
         <div class="masu">-</div>
         <div class="masu">-</div>
@@ -75,27 +42,74 @@ document.getElementsByClassName('hougan').addEventListener('click', function () 
         <div id="masu8">-</div>
         <div id="masu9">-</div> -->
     </div>
-    <div class="text">テキスト</div>
-
+    <div class="text">テキスト</div><br>
+    <button onclick="boxAddress()" type="button">
+        htmlCollection の数字割り当て表示</button>
+    <button onclick="boxAddress2()" type="button">
+        配列 の数字割り当て表示</button>
+    <p>
+        <button onclick="arrayData()" type="button">
+            配列状況</button><br>
+    <div id="nowData"></div>
+    </p>
     <script>
 
         const player1 = "〇";
         const player2 = "×";
 
+// 表示foreach用配列
         const getMasu = document.getElementsByClassName("masu");
-        const changeMasu = Array.from(getMasu);
-        changeMasu =["1","2","3","4","5","6","7","8","9"]; 
+        var changeMasu = Array.from(getMasu);
+        console.log(changeMasu);
 
+        // 勝敗用配列
+        var aaa = changeMasu.concat();
+        let len3 = aaa.length;
+        for (var i = 0; i < len3; i++) {
+            aaa[i] = i;
+        }
+          // var aaa=[0,1,2,3,4,5,6,7,8];これでいい
+        console.log(aaa);
+
+        //htmlCollection の数字割り当て表示
+        function boxAddress() {
+            var len = getMasu.length;
+            for (var i = 0; i < len; i++) {
+                getMasu[i].textContent = "htmlC No" + i;
+            }
+        }
+
+        //配列変換後の数字割り当て表示（上と一緒）
+        function boxAddress2() {
+            var len2 = changeMasu.length;
+            for (var i = 0; i < len2; i++) {
+                changeMasu[i].textContent = "配列No " + i;
+            }
+        }
+
+
+        // function arrayData(){
+        //     var len2 = changeMasu.length;
+        //     for(var i=0;i<len2;i++){
+
+        //         changeMasu[i].textContent=i;
+        //     }
+        // }
+
+
+        // マルバツ反映
         let turn = 0;
-
         changeMasu.forEach(function (changeMasu) {
             changeMasu.addEventListener("click", function () {
-                console.log(changeMasu);
+                // console.log(changeMasu);
                 if (turn % 2 === 0) {
                     changeMasu.style.backgroundColor = "red";
                     changeMasu.textContent = player1;
-                    console.log("A" +turn);
-                    console.log(changeMasu[1]);
+                    console.log("A" + turn);
+                    // let num = getMasu.item(changeMasu);
+                    // var index = [].slice.call( getMasu ).indexOf( changeMasu ) ;
+                    console.log(num)
+
 
                 }
 
@@ -108,14 +122,12 @@ document.getElementsByClassName('hougan').addEventListener('click', function () 
 
 
             })
-            })
+        })
 
 
 
 
     </script>
->>>>>>> f4e0c3f573feda893efe4339ecd6a1568399b6f6
-
 
 </body>
 

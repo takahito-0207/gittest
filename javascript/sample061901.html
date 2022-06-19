@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>mebeeサンプル</title>
+</head>
+<style>
+  .main {
+    margin: 0 auto;
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 35px;
+  }
+</style>
+<script>
+
+  function hoge() {
+    // クラス名list-group-itemの要素を取得
+    var htmlcollection = document.getElementsByClassName('list-group-item');
+    // 要素の長さを取得
+    var len = htmlcollection.length;
+    // 長さの数だけループ処理
+    for (var i = 0; i < len; i++) {
+      htmlcollection[i].textContent = i;
+    }
+  }
+
+</script>
+
+<body>
+  <div class="main">
+
+    <h2 class="badge badge-success">liデータ</h2>
+
+    <ul class="list-group">
+      <li class="list-group-item">a</li>
+      <li class="list-group-item">b</li>
+      <li class="list-group-item">c</li>
+      <li class="list-group-item">d</li>
+      <li class="list-group-item">e</li>
+    </ul>
+
+    <button onclick="hoge();" type="button" class="btn btn-raised btn-warning">
+      変更
+    </button>
+
+  </div>
+</body>
+
+</html>
