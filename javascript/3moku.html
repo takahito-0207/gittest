@@ -62,14 +62,18 @@
         var changeMasu = Array.from(getMasu);
         console.log(changeMasu);
 
+
+        const getMasu2 = document.getElementsByClassName("masu").item(i);
+        console.log(getMasu2);
+
         // 勝敗用配列
-        var aaa = changeMasu.concat();
-        let len3 = aaa.length;
+        var vsData = changeMasu.concat();
+        let len3 = vsData.length;
         for (var i = 0; i < len3; i++) {
-            aaa[i] = i;
+            vsData[i] = i;
         }
           // var aaa=[0,1,2,3,4,5,6,7,8];これでいい
-        console.log(aaa);
+        console.log(vsData);
 
         //htmlCollection の数字割り当て表示
         function boxAddress() {
@@ -99,26 +103,50 @@
 
         // マルバツ反映
         let turn = 0;
-        changeMasu.forEach(function (changeMasu) {
+        changeMasu.forEach(function (changeMasu,index) {
+            const idx = index;//覚えさせておかないと次の行でforeachのindex情報が消える
             changeMasu.addEventListener("click", function () {
-                // console.log(changeMasu);
                 if (turn % 2 === 0) {
+
+                    //foreachのindexを使ったパターン
                     changeMasu.style.backgroundColor = "red";
                     changeMasu.textContent = player1;
+                    console.log(idx);
                     console.log("A" + turn);
-                    // let num = getMasu.item(changeMasu);
                     // var index = [].slice.call( getMasu ).indexOf( changeMasu ) ;
-                    console.log(num)
-
+                    // console.log(index)
+                    vsData[idx]="A";
 
                 }
 
                 else {
+                    
+                    //foreachのindexを使わなかったパターン
                     changeMasu.style.backgroundColor = "blue";
                     changeMasu.textContent = player2;
                     console.log("B" + turn);
+                    var index = [].slice.call( getMasu ).indexOf( changeMasu ) ;
+                    vsData[index]="B";
                 }
                 turn++;
+                console.log(vsData);
+
+                // function endFlag(const plyr){
+                //     const p = plyr; 
+                //     vsData[1]
+
+var case1=vsData.slice(0,3);console.log(case1);
+var case2=vsData.slice(3,6);console.log(case2);
+var case3=vsData.slice(6,9);console.log(case3);
+var case4=vsdata.concat([0],[4],[7]);
+var case5
+var case6
+var case7
+var case8
+
+    
+
+                // }
 
 
             })
