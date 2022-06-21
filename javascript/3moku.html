@@ -60,9 +60,9 @@
 
         table {
             width: 297px;
-            height: 100px;
+            height: 60px;
             border: 1px solid #999999;
-            margin: 10px 0;
+            margin: 5px 0;
         }
 
         td {
@@ -103,10 +103,11 @@
         配列 の数字割り当て表示</button>
     <p>
     <div>配列データ</div>
-       </p>
-    <button onclick="createTbl()" type="button">
-        テーブル作成（増えます）</button>
-        <div id="vsDataNow"></div>
+    </p>
+    <!-- 260行目がないならコメントアウトを消すと表が増える -->
+    <!-- <button onclick="createTbl()" type="button">
+        テーブル作成（増えます）</button> -->
+    <div id="vsDataNow"></div>
 
     <script>
 
@@ -158,6 +159,7 @@
                 }
                 turn++;
                 console.log(vsData);
+                createTbl()
 
 
                 // 　-----------------------　勝敗判定　-----------------------
@@ -175,11 +177,7 @@
                 let case7 = box0 + box4 + box8;
                 let case8 = box2 + box4 + box6;
 
-                if (vsData.every(n => n !== 0)) {
-                    document.getElementById("text").textContent = "引き分け";
-                    document.getElementById("main").innerHTML = '<div id="owari">つづく</div>';
-                }
-                else if (case1 === 3 || case2 === 3 || case3 === 3 || case4 === 3 || case5 === 3 || case6 === 3 || case7 === 3 || case8 === 3) {
+                if (case1 === 3 || case2 === 3 || case3 === 3 || case4 === 3 || case5 === 3 || case6 === 3 || case7 === 3 || case8 === 3) {
                     console.log("Aの勝ち");
                     document.getElementById("text").textContent = "〇　の勝ち";
                     document.getElementById("main").innerHTML = '<div id="owari">おわり</div>';
@@ -189,7 +187,11 @@
                     document.getElementById("text").textContent = "×　の勝ち";
                     document.getElementById("main").innerHTML = '<div id="owari">おわり</div>';
                     // document.getElementById("main").innerHTML = '<div id="peke">×</div>';
-                } else {
+                } else if (vsData.every(n => n !== 0)) {
+                    document.getElementById("text").textContent = "引き分け";
+                    document.getElementById("main").innerHTML = '<div id="owari">つづく</div>';
+                }
+                else {
                     console.log("まだ舞える");
                 }
             })
@@ -255,6 +257,8 @@
             }
 
             // 生成したtable要素を追加する
+            // この260行があるかないかで挙動が変わる
+            document.getElementById('vsDataNow').textContent = turn + "手目";
             document.getElementById('vsDataNow').appendChild(table);
         }
     </script>
