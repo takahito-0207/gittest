@@ -1,0 +1,27 @@
+body {
+  font-size: 4rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* スクロールスナップの設定 */
+.container {
+  overflow: auto;
+  scroll-snap-type: both;
+  display: grid;
+  grid-template-columns: repeat(5, 42vw);
+  grid-template-rows: repeat(3, 42vw);
+  gap: 1rem;
+  height: 100vh;
+}
+.area {
+  scroll-snap-align: start;
+}
+
+/* 各エリアの背景色 */
+.area:nth-child(even) {
+  background-color: #ffce53;
+}
+.area:nth-child(odd) {
+  background-color: #0bd;
+}

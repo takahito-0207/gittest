@@ -1,0 +1,22 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+}
+.fa-home {
+    color: #0bd;
+    font-size: 2rem;
+}
+.fa-rss {
+    color: #fa2;
+}
+.fa-mobile-alt {
+    color: #999;
+    font-size: 3rem;
+}
+.fa-youtube {
+    color: #f00;
+    font-size: 2rem;
+}
+.fa-leaf {
+    color: #8c2;
+}

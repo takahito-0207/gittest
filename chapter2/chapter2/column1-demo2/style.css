@@ -1,0 +1,17 @@
+.wrapper {
+  /* 文字設定 */
+  font-family: 'Sawarabi Mincho', sans-serif;
+  font-size: 4rem;
+  text-align: center;
+  color: #fff;
+
+  /* 中央揃え */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 背景画像 */
+  background-image: url(bg-blur.jpg);
+  background-size: cover;
+  height: 100vh;
+}
