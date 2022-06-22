@@ -115,15 +115,15 @@
 
         // 表示foreach用配列
         const htmlCollection = document.getElementsByClassName("box");
-        var changebox = Array.from(htmlCollection);
-        console.log(changebox);
+        var boxArray = Array.from(htmlCollection);
+        console.log(boxArray);
 
         // 勝敗用配列
         let vsData = new Array(9).fill(0);
         console.log(vsData);
 
         // 連番の場合
-        // var vsData = changebox.concat();
+        // var vsData = boxArray.concat();
         // let len3 = vsData.length;
         // for (var i = 0; i < len3; i++) {
         //     vsData[i] = i;
@@ -133,29 +133,28 @@
 
         // マルバツ反映
         let turn = 0;
-        changebox.forEach(function (changebox, index) {
+        boxArray.forEach(function (boxArray, index) {
             const idx = index;//覚えさせておかないと次の行でforeachのindex情報が消える
-            changebox.addEventListener("click", function () {
+            boxArray.addEventListener("click", function () {
 
                 if (turn % 2 === 0) {
                     //foreachのindexを使ったパターン
-                    changebox.style.backgroundColor = "red";
-                    changebox.textContent = "〇";
+                    boxArray.style.backgroundColor = "red";
+                    boxArray.textContent = "〇";
                     vsData[idx] = 1;//勝敗判定　1+1+1＝3
                     document.getElementById("text").textContent = turn + 2 + "手目：×　の場所を選んでください";
-                    changebox.removeEventListener('click', arguments.callee);//現在非推奨の書き方
-
+                    boxArray.removeEventListener('click', arguments.callee);//現在非推奨の書き方
                 }
 
                 else {
 
                     //foreachのindexを使わなかったパターン
-                    changebox.style.backgroundColor = "blue";
-                    changebox.textContent = "×";
-                    var index2 = [].slice.call(htmlCollection).indexOf(changebox);//理解未だ及ばず
+                    boxArray.style.backgroundColor = "blue";
+                    boxArray.textContent = "×";
+                    var index2 = [].slice.call(htmlCollection).indexOf(boxArray);//理解未だ及ばず
                     vsData[index2] = 4;//勝敗判定　4+4+4＝12
                     document.getElementById("text").textContent = turn + 2 + "手目：〇　の場所を選んでください";
-                    changebox.removeEventListener('click', arguments.callee);//現在非推奨の書き方
+                    boxArray.removeEventListener('click', arguments.callee);//現在非推奨の書き方
                 }
                 turn++;
                 console.log(vsData);
@@ -180,13 +179,13 @@
                 if (case1 === 3 || case2 === 3 || case3 === 3 || case4 === 3 || case5 === 3 || case6 === 3 || case7 === 3 || case8 === 3) {
                     console.log("Aの勝ち");
                     document.getElementById("text").textContent = "〇　の勝ち";
-                    document.getElementById("main").innerHTML = '<div id="owari">おわり</div>';
-                    // document.getElementById("main").innerHTML = '<div id="maru">〇</div>';
+                    // document.getElementById("main").innerHTML = '<div id="owari">おわり</div>';
+                    document.getElementById("main").innerHTML = '<div id="maru">〇</div>';
                 } else if (case1 === 12 || case2 === 12 || case3 === 12 || case4 === 12 || case5 === 12 || case6 === 12 || case7 === 12 || case8 === 12) {
                     console.log("Bの勝ち");
                     document.getElementById("text").textContent = "×　の勝ち";
-                    document.getElementById("main").innerHTML = '<div id="owari">おわり</div>';
-                    // document.getElementById("main").innerHTML = '<div id="peke">×</div>';
+                    // document.getElementById("main").innerHTML = '<div id="owari">おわり</div>';
+                    document.getElementById("main").innerHTML = '<div id="peke">×</div>';
                 } else if (vsData.every(n => n !== 0)) {
                     document.getElementById("text").textContent = "引き分け";
                     document.getElementById("main").innerHTML = '<div id="owari">つづく</div>';
@@ -209,9 +208,9 @@
 
         //配列変換後の数字割り当て表示
         function boxAddress2() {
-            var len2 = changebox.length;
+            var len2 = boxArray.length;
             for (var i = 0; i < len2; i++) {
-                changebox[i].textContent = "配列No " + i;
+                boxArray[i].textContent = "配列No " + i;
             }
         }
 
