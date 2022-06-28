@@ -5,6 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+<style>
+#main{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.viewCard{
+    width: 70px;
+    height: 100px;
+    border: 1px solid #333;
+    margin: 3px;
+}
+
+
+</style>
+
+
 </head>
 <body>
     <header>
@@ -18,11 +36,19 @@
 </footer>
 
 <script>
+const cField = document.getElementById("main");
 
 
 
 
-    
+
+for(let i=0;i<52;i++){
+const makeCard = document.createElement("div");
+makeCard.className ="viewCard";
+
+document.getElementById("main").append(makeCard);
+
+}
 </script>
 
 
