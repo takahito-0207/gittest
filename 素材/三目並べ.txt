@@ -1,0 +1,39 @@
+〇処理の流れ
+
+1.最後のfor文でクリックに反応し、checkWinner関数を呼び出す。同時にgameArrayに〇か×を書き込む
+2.checkWinner関数内でmapと配列checkArrayを使ってcheckSame関数を呼び出す
+3.checkSameで配列gameArrayを参照し、1ライン0じゃない場合に戻り値をcheckWinner関数に戻す
+4.checkWinner関数で戻り値がすべて同じ文字か判断し、勝敗判定
+
+〇array.map()について
+これ、foreachと同じように変数に入っている全ての要素？にたいして最大数処理を掛けるようです。
+（勝手に回すfor文みたいなもの）
+
+なのでこの場合、
+    const checkArray = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+この8配列8回checkSameに送っています。（console開いて処理してもらうとうざいくらいログが流れます）
+
+〇下記の部分について
+const checkSame = (array) => {
+    const a = gameArray[array[0]];
+    const b = gameArray[array[1]];
+    const c = gameArray[array[2]];
+}
+
+mapにて引数（配列Array）としてcheckArrayの3文字8配列を持ってきています。
+で、Array[0~1]ってのがなにかっていうと、持ってきているcheckArrayの0～２文字目（左から0）を割り当てており、それを[ ]で囲んでgameArrayのインデックス番号として使っています。
+        [0, 1, 2]　GameArray[0],[1],[2]の要素（0か〇か×）をa,b,cに入れる
+        [3, 4, 5],GameArray[3],[4],[5]の要素をa,b,cに入れる
+という感じの処理になります。
+これで後半のif分を処理します。
+
+あとはcheckWinnerに帰って勝敗判定、という感じだと思います。

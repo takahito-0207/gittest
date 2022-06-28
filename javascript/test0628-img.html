@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #main img {
+            width: 1000px;
+            height: auto;
+        }
+
+        .canvas {}
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <img id="imgPlace" alt="">
+    </div>
+
+
+    <canvas id="canvas"></canvas>
+<p></p>
+    <canvas class="canvas2"></canvas>
+
+
+    <script>
+        let img = document.getElementById("imgPlace");
+        img.src = "tramp.png";
+
+        function cardImg() {
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            var image = new Image();
+            image.src = "tramp.png";
+            image.onload = function () {
+                ctx.drawImage(image, 150, 200, 500, 300, 60,60, 500, 300);
+            }
+        }
+        cardImg();
+
+
+        
+        function cardImg2() {
+            const canvas = document.querySelectorAll("canvas2");
+            const ctx = canvas[0].getContext("2d");
+
+            var image2 = new Image();
+            image2.src = "tramp.png";
+            image2.onload = function () {
+                ctx.drawImage(image, 150, 200, 500, 300, 60,60, 500, 300);
+            }
+        }
+        cardImg2();
+
+
+    </script>
+
+</body>
+
+</html>

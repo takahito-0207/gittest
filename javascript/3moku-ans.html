@@ -42,26 +42,43 @@
     // 三つの値が一致しているかをチェックする関数 booleanを返す
     // 引数として要素が３つの配列を受け取る
     const checkSame = (array) => {
-        const a = gameArray[array[0]];
-        const b = gameArray[array[1]];
-        const c = gameArray[array[2]];
+        const a = gameArray[array[0]];//checkArrayの[0]桁目をindex番号として使用
+        const b = gameArray[array[1]];//checkArrayの[1]桁目をindex番号として使用
+        const c = gameArray[array[2]];//checkArrayの[2]桁目をindex番号として使用
+        console.log("🚀checkSame const a,b,cの内容", a, b, c)
 
         if ([a, b, c].every(value => value !== 0)) {
+            console.log("checksome ifのif部分　★0なし", a, b, c)
             return a === b && a === c;
+        } else {
+            console.log("checksome ifのelse部分　0あり", a, b, c)
+
         }
     }
 
     // チェックするべき縦横斜めの組み合わせを記録した配列
     const checkArray = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
+    //  [0][1][2]　桁目として扱うためにcheckSameに送ってる 
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
     ];
 
     const checkWinner = (player) => {
         // 各パターンで検証して、一つでも成立していればtrueを返す
-        const checkBoard = checkArray.map(array => checkSame(array)).includes(true)
+        //　以下2分は確認用
+        console.log(" ");
+        const checkBoardView = checkArray.map(array => array);//そのまま入れ直し
+        console.log("🚀checkArray.map(array)の内容", checkBoardView)
+        console.log(" ");
 
+        //.mapは要素全てに処理をかけるので、下記の文章1文で1クリックにつき上記8パターンの配列をchecksameに送って確認している
+        const checkBoard = checkArray.map(array => checkSame(array)).includes(true)
         if (checkBoard) {
             // ゲームが終了したので、flagをtrueにする
             flag = true;
@@ -78,7 +95,7 @@
         masu.addEventListener('click', () => {
 
             // すでにクリックしていないマスであるかつゲームが続いていることを確認
-            if (gameArray[i] === 0 && flag === false ) {
+            if (gameArray[i] === 0 && flag === false) {
 
                 if (count % 2 === 0) {
                     masu.textContent = "◯";
