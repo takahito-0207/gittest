@@ -23,12 +23,13 @@
     </div>
 
 
-    <canvas id="canvas"></canvas>
-<p></p>
-    <canvas class="canvas2"></canvas>
+    <canvas id="canvas"> </canvas>
+    <p></p>
+    <canvas class="canvas2"> </canvas>
 
 
     <script>
+        
         let img = document.getElementById("imgPlace");
         img.src = "tramp.png";
 
@@ -39,21 +40,21 @@
             var image = new Image();
             image.src = "tramp.png";
             image.onload = function () {
-                ctx.drawImage(image, 150, 200, 500, 300, 60,60, 500, 300);
+                ctx.drawImage(image, 150, 200, 500, 300, 60, 60, 250, 100);
             }
         }
         cardImg();
 
 
-        
+
         function cardImg2() {
             const canvas = document.querySelectorAll("canvas2");
-            const ctx = canvas[0].getContext("2d");
+            const ctx = canvas2.getContext("2d");
 
             var image2 = new Image();
             image2.src = "tramp.png";
             image2.onload = function () {
-                ctx.drawImage(image, 150, 200, 500, 300, 60,60, 500, 300);
+                ctx.drawImage(image, 150, 200, 500, 300, 60, 60, 500, 300);
             }
         }
         cardImg2();

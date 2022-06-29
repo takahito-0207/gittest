@@ -1,0 +1,5 @@
+No(Index),0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51
+cardNum,0,1,2,3,4,5,6,7,8,9,10,11,12,0,1,2,3,4,5,6,7,8,9,10,11,12,0,1,2,3,4,5,6,7,8,9,10,11,12,0,1,2,3,4,5,6,7,8,9,10,11,12
+cardname,spade1,spade2,spade3,spade4,spade5,spade6,spade7,spade8,spade9,spade10,spade11,spade12,spade13,heart1,heart2,heart3,heart4,heart5,heart6,heart7,heart8,heart9,heart10,heart11,heart12,heart13,dia1,dia2,dia3,dia4,dia5,dia6,dia7,dia8,dia9,dia10,dia11,dia12,dia13,club1,club2,club3,club4,club5,club6,club7,club8,club9,club10,club11,club12,club13
+cardPosition,rand(0~51),,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+cardImgName,s0.png,s1.png,s2.png,s3.png,s4.png,s5.png,s6.png,s7.png,s8.png,s9.png,s10.png,s11.png,s12.png,h0.png,h1.png,h2.png,h3.png,h4.png,h5.png,h6.png,h7.png,h8.png,h9.png,h10.png,h11.png,h12.png,d0.png,d1.png,d2.png,d3.png,d4.png,d5.png,d6.png,d7.png,d8.png,d9.png,d10.png,d11.png,d12.png,c0.png,c1.png,c2.png,c3.png,c4.png,c5.png,c6.png,c7.png,c8.png,c9.png,c10.png,c11.png,c12.png
