@@ -49,8 +49,11 @@
     // 現在の手番をチェックする
     let count = 0;
 
-    // 現在のゲームの進行状況を保存する配列
-    const gameArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    // ゲームが終了したかを表すフラグ
+    let flag = false;
+
+    // 現在のゲームの進行状況を保存する配列(全部0に)
+    const gameArray = new Array(9).fill(0);
 
     // ゲームの勝ち負けをチェックする関数
 
@@ -59,20 +62,42 @@
         // よく使うので変数に入れておく　thisと同じ意味
         // getElementsByClassName("box").item(i)　はi番目のboxという指定
         choiceBox.item(i).addEventListener('click', function () {
-            let idx =i;
-            if (count % 2 === 0) {
-                this.textContent = "◯";
-                gameArray[i] = "◯";
-                console.log("gameArray"+gameArray)
-                document.querySelector("#comment").textContent="次は×";
-            } else {
-                this.textContent = "×";
-                gameArray[i] = "×";
-                document.querySelector("#comment").textContent="次は〇";
-            }
-            
 
-            // チェック列
+            if (count % 2 === 0) {
+                    this.textContent = "◯";
+                    gameArray[i] = "◯";
+                    document.querySelector("#comment").textContent = "次は×";
+                    choiceBox.item(i).style.backgroundColor = "red";
+                    choiceBox.item(i).addEventListener('click', function (){});
+
+                } else {
+                    this.textContent = "×";
+                    gameArray[i] = "×";
+                    document.querySelector("#comment").textContent = "次は〇";
+                    choiceBox.item(i).style.backgroundColor = "blue";
+                    choiceBox.item(i).addEventListener('click', function (){});
+                }
+                count++;
+
+
+
+            // if (gameArray[i] === 0 && flag === false) {
+            //     if (count % 2 === 0) {
+            //         this.textContent = "◯";
+            //         gameArray[i] = "◯";
+            //         document.querySelector("#comment").textContent = "次は×";
+            //         choiceBox.item(i).style.backgroundColor = "red";
+
+            //     } else {
+            //         this.textContent = "×";
+            //         gameArray[i] = "×";
+            //         document.querySelector("#comment").textContent = "次は〇";
+            //         choiceBox.item(i).style.backgroundColor = "blue";
+            //     }
+            //     count++;
+            // }
+
+            // チェック列 チェック方法は2番目に高い山の時みたいな感じ方式
             const check1 = [gameArray[0], gameArray[1], gameArray[2]];
             const check2 = [gameArray[3], gameArray[4], gameArray[5]];
             const check3 = [gameArray[6], gameArray[7], gameArray[8]];
@@ -84,27 +109,28 @@
             const check7 = [gameArray[0], gameArray[4], gameArray[8]];
             const check8 = [gameArray[2], gameArray[4], gameArray[6]];
 
-            function checkWinner(checkLine) {
+            function checkWinner(checkLine, messege) {
                 if (checkLine.every(varue => varue === "◯")) {
-                    console.log("◯の勝ち!");
-                    document.querySelector("#comment").textContent="◯の勝ち!";
-                    
-                } else if( checkLine.every(varue => varue === "×")) {
-                    console.log("×の勝ち!");
-                    document.querySelector("#comment").textContent="×の勝ち!";
+                    console.log(messege + "が揃って　◯の勝ち!");
+                    document.querySelector("#comment").textContent = messege + "が揃って　◯の勝ち!";
+                    flag = true;
+                } else if (checkLine.every(varue => varue === "×")) {
+                    console.log(messege + "が揃って　×の勝ち!");
+                    document.querySelector("#comment").textContent = messege + "が揃って　×の勝ち!";
+                    flag = true;
                 }
             }
 
-            checkWinner(check1);
-            checkWinner(check2);
-            checkWinner(check3);
-            checkWinner(check4);
-            checkWinner(check5);
-            checkWinner(check6);
-            checkWinner(check7);
-            checkWinner(check8);
+            checkWinner(check1, "横ライン上");
+            checkWinner(check2, "横ライン真ん中");
+            checkWinner(check3, "横ライン下");
+            checkWinner(check4, "縦ライン左");
+            checkWinner(check5, "縦ライン真ん中");
+            checkWinner(check6, "縦ライン右");
+            checkWinner(check7, "左斜めライン");
+            checkWinner(check8, "右斜めライン");
 
-            count++;
+
         })
     }
 </script>
