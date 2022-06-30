@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .board {
+            margin: 100px auto 0 auto;
+            width: 600px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .board div {
+            border: solid 1px black;
+            width: 200px;
+            height: 200px;
+            font-size: 100px;
+            text-align: center;
+            line-height: 2;
+        }
+
+        .choiced {
+            /* class変更先 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <div id="comment">ここにコメントが入ります。</div>
+</body>
+<script>
+    // 現在の手番をチェックする
+    let count = 0;
+
+    // 現在のゲームの進行状況を保存する配列
+    const gameArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+    // ゲームの勝ち負けをチェックする関数
+
+    for (let i = 0; i < 9; i++) {
+        const choiceBox = document.querySelectorAll(".box");
+        // よく使うので変数に入れておく　thisと同じ意味
+        // getElementsByClassName("box").item(i)　はi番目のboxという指定
+        choiceBox.item(i).addEventListener('click', function () {
+            let idx =i;
+            if (count % 2 === 0) {
+                this.textContent = "◯";
+                gameArray[i] = "◯";
+                console.log("gameArray"+gameArray)
+                document.querySelector("#comment").textContent="次は×";
+            } else {
+                this.textContent = "×";
+                gameArray[i] = "×";
+                document.querySelector("#comment").textContent="次は〇";
+            }
+            
+
+            // チェック列
+            const check1 = [gameArray[0], gameArray[1], gameArray[2]];
+            const check2 = [gameArray[3], gameArray[4], gameArray[5]];
+            const check3 = [gameArray[6], gameArray[7], gameArray[8]];
+
+            const check4 = [gameArray[0], gameArray[3], gameArray[6]];
+            const check5 = [gameArray[1], gameArray[4], gameArray[7]];
+            const check6 = [gameArray[2], gameArray[5], gameArray[8]];
+
+            const check7 = [gameArray[0], gameArray[4], gameArray[8]];
+            const check8 = [gameArray[2], gameArray[4], gameArray[6]];
+
+            function checkWinner(checkLine) {
+                if (checkLine.every(varue => varue === "◯")) {
+                    console.log("◯の勝ち!");
+                    document.querySelector("#comment").textContent="◯の勝ち!";
+                    
+                } else if( checkLine.every(varue => varue === "×")) {
+                    console.log("×の勝ち!");
+                    document.querySelector("#comment").textContent="×の勝ち!";
+                }
+            }
+
+            checkWinner(check1);
+            checkWinner(check2);
+            checkWinner(check3);
+            checkWinner(check4);
+            checkWinner(check5);
+            checkWinner(check6);
+            checkWinner(check7);
+            checkWinner(check8);
+
+            count++;
+        })
+    }
+</script>
+
+</html>
