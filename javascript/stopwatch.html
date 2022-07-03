@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="stop_watch">00m00s</div>
+    <button id="start" >スタート</button>
+    <button id="stop" disabled>ストップ</button>
+    <button id="clear" disabled>クリア</button>
+
+    <script>
+        //HTMLで、それぞれのidがもつ要素をElementオブジェクトとして変数に格納する
+        const STOP_WATCH = document.getElementById('stop_watch');
+        const START = document.getElementById('start');
+        const STOP = document.getElementById('stop');
+        const CLEAR = document.getElementById('clear');
+
+        let minutes = 0;    //分を表示する変数minutes  初期値を0とする
+        let seconds = 0;    //分を表示する変数seconds  初期値を0とする
+
+        //関数の定義
+        let stopWatch = () => {
+            seconds++;  //変数secondsに1を足す
+            if (seconds % 60 === 0) {   //もしsecondsを60で割った時の余りが0ならば…
+                minutes++;  //変数minutesに1を足す
+                seconds = 0;    //変数secondsを0にする
+            }
+            //stop_watchのタグの中身を書き換える
+            //表示桁を00とするために、分、秒に'00'を足し、sliceで取り出してから表示させる
+            STOP_WATCH.innerHTML = ('00' + minutes).slice(-2) + 'm' + ('00' + seconds).slice(-2) + 's';
+        }
+
+        let interval;   //setInterval、clearIntervalを使用する際の変数、二つの関数で仕様するので関数の外で定義する
+
+        //startボタンを押したときの処理
+        START.addEventListener('click' , () => {
+            interval = setInterval(stopWatch, 1000);    //1000msec毎にstopWatch関数を実行する
+            START.disabled = true;  //startボタンを無効化する
+            STOP.disabled = false;  //stopボタンを有効化する
+            CLEAR.disabled = true;  //clearボタンを無効化する
+        })
+
+        //stopボタンを押したときの処理
+        STOP.addEventListener('click' , () => {
+            clearInterval(interval);    //intervalを止める
+            START.disabled = false;     //startボタンを有効化する
+            STOP.disabled = true;       //stopボタンを無効化する
+            CLEAR.disabled = false;     //clearボタンを有効化する
+        })
+        
+        
+        //clearボタンを押した時の処理
+        CLEAR.addEventListener('click' , () => {
+            STOP_WATCH.innerHTML = '00m00s';    //stop_watchタグの中身を初期値の00m00sに戻す
+            minutes = 0;    //変数minutesを初期値の0に戻す
+            seconds = 0;    //変数secondsを初期値の0に戻す
+            START.disabled = false;     //startボタンを有効化する
+            STOP.disabled = true;       //stopボタンを無効化する
+            CLEAR.disabled = true;      //clearボタンを無効化する
+        })
+    </script>
+</body>
+</html>

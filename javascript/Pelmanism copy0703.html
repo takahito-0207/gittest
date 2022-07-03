@@ -6,15 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>神経衰弱</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Play:wght@700&display=swap"
-        rel="stylesheet">
     <style>
         body {
             background-color: green;
             color: black;
-            cursor: auto;
         }
 
         #main {
@@ -32,7 +27,6 @@
             text-align: center;
             background-size: 100%;
             margin-bottom: 15px;
-
         }
 
         .card img {
@@ -41,16 +35,11 @@
             z-index: -1;
         }
 
-        .cursor{
-            cursor: pointer;
-        }
-
         #top {
             position: fixed;
             top: 5px;
             left: 5px;
-            /* width: 95%; */
-            width: 670px;
+            width: 95%;
             height: 100px;
             border: 1px solid black;
             background-color: white;
@@ -69,16 +58,13 @@
             position: fixed;
             bottom: 5px;
             left: 5px;
-            /* width: 95%; */
-            width: 670px;
+            width: 95%;
             height: 100px;
             border: 1px solid black;
             background-color: white;
             opacity: 0.8;
             padding: 10px;
             z-index: 3;
-            font-size: 24px;
-            font-weight: 600;
         }
 
         h1 {
@@ -88,16 +74,15 @@
         #title {
             grid-row: 1;
             grid-column: 1;
-            /* border: 1px solid #333; */
+            border: 1px solid #333;
             display: flex;
             float: left;
-            font-size: 14px;
         }
 
         #timeCount {
             grid-row: 1/3;
             grid-column: 2;
-            /* border: 1px solid #333; */
+            border: 1px solid #333;
         }
 
         #score {
@@ -105,62 +90,17 @@
             grid-row: 2;
             grid-column: 1;
             margin: 10px 0 0 20px;
-            /* border: 1px solid #333; */
-            font-size: 14px;
-        }
-
-        #timeCount {
-            display: flex;
-            flex-direction: row;
-            padding: 10px;
-        }
-
-        #clock {
-            position: absolute;
-            padding-left: 30px;
-            font-size: 60px;
-            font-family: 'Play', sans-serif;
-            z-index: 1;
-        }
-
-        #start {
-            position: absolute;
-            background-color: orangered;
-            border: 2px solid black;
-            font-weight: 800;
-            color: aliceblue;
-            width: 300px;
-            height: 75px;
-            z-index: 2;
-            font-size: 40px;
-            border-radius: 20px/20px;
-            cursor: pointer;
-        }
-
-        .startOff {
-            opacity: 0.2;
-            /* stopボタン削除するなら0に */
-        }
-
-        #stop {
-            font-size: 10px;
-            width: 60px;
-            height: 25px;
-            /* background-color: orange; */
-            border-radius: 10px/10px;
-            cursor: pointer;
+            border: 1px solid #333;
         }
 
         /* デバッグ用:h1横チートボタン用 */
         .cheatBtn {
-            width: 100px;
-            height: 25px;
-            /* background-color: orange; */
+            width: 150px;
+            height: 30px;
+            background-color: orange;
             border: 1px solid red;
-            margin: 3px 0 0 60px;
+            margin: 3px 0 0 80px;
             border-radius: 10px/10px;
-            cursor: pointer;
-            cursor: pointer;
         }
 
         .cheat {
@@ -176,20 +116,14 @@
         <div id="title">
             <h1>神経衰弱</h1>
             <button onclick="cheat()" type="button" class="cheatBtn">チートボタン</button>
-            <button id="stop" disabled>stop</button>
         </div>
-        <div id="timeCount">
-            <button id="start">スタート</button>
-
-            <div id="clock">00:00:00</div>
-        </div>
-        <div id="score">
-        </div>
+        <div id="timeCount"></div>
+        <div id="score"></div>
     </div>
     <div id="main">
     </div>
     <div id="footer">
-        <div id="commentBottom">スタートをクリックして開始してください。</div>
+        <div id="commentBottom">カードをクリックして開始してください。</div>
         <div id="getPair"></div>
 
     </div>
@@ -200,7 +134,7 @@
         // 0=伏せ状態、c(choice)=選択状態、s(success)=ペア完成状態　現状0とその他扱い
         const cardStates = new Array(52).fill(0);
 
-        // 以下は0～51の商と余で(多分）出力できる：いちいちfor文が面倒なので全部配列に
+        // 以下は0～51の商と余で(多分）出力できるがいちいちfor文とか面倒なので全部配列に
         const cardNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         const cardName = ["spade1", "spade2", "spade3", "spade4", "spade5", "spade6", "spade7", "spade8", "spade9", "spade10", "spade11", "spade12", "spade13", "heart1", "heart2", "heart3", "heart4", "heart5", "heart6", "heart7", "heart8", "heart9", "heart10", "heart11", "heart12", "heart13", "dia1", "dia2", "dia3", "dia4", "dia5", "dia6", "dia7", "dia8", "dia9", "dia10", "dia11", "dia12", "dia13", "club1", "club2", "club3", "club4", "club5", "club6", "club7", "club8", "club9", "club10", "club11", "club12", "club13"];
         const cardImgName = ["s0.png", "s1.png", "s2.png", "s3.png", "s4.png", "s5.png", "s6.png", "s7.png", "s8.png", "s9.png", "s10.png", "s11.png", "s12.png", "h0.png", "h1.png", "h2.png", "h3.png", "h4.png", "h5.png", "h6.png", "h7.png", "h8.png", "h9.png", "h10.png", "h11.png", "h12.png", "d0.png", "d1.png", "d2.png", "d3.png", "d4.png", "d5.png", "d6.png", "d7.png", "d8.png", "d9.png", "d10.png", "d11.png", "d12.png", "c0.png", "c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png", "c7.png", "c8.png", "c9.png", "c10.png", "c11.png", "c12.png"];
@@ -219,57 +153,11 @@
 
 
         let count = 0;
-        let pair = 0;//0~(51/2)
-        let goNext = 99;//0:選択中、1：処理中、2：終了、99：一時停止
+        let pair = 0;
+        let goNext = 0;
 
         let choiceNum = new Array(2);
         let choiceIdx = new Array(2);
-
-        // ----------------------------------------------------------------------------
-        // キッチンタイマー（見様見真似）
-
-        let min = 0;
-        let sec = 0;
-        let ms = 0;
-        let timeCount = 0;
-
-        let timeView = () => {
-            timeCount++;
-            min = ("00" + Math.floor(timeCount / 6000)).slice(-2);//99分　＞　00分
-            sec = ("00" + Math.floor((timeCount / 100) % 60)).slice(-2);
-            ms = ("00" + timeCount).slice(-2);
-
-            const clockTimer = document.getElementById("clock");
-            clockTimer.innerHTML = (min + ":" + sec + ":" + ms);
-        }
-
-        let gameClock;
-
-        const tReady = document.getElementById("start");
-        tReady.addEventListener("click", () => {
-            goNext = 0;
-            gameClock = setInterval(timeView, 10);
-            tReady.disabled = true;
-            tStop.disabled = false;
-            const comment = document.getElementById("commentBottom");
-            comment.textContent = "カードを選んでください。"
-            tReady.classList.add("startOff")
-        })
-
-
-        // ストップボタンはデバッグ用
-        const tStop = document.getElementById("stop");
-        tStop.addEventListener("click", () => {
-            goNext = 99;
-            tReady.disabled = false;
-            tStop.disabled = true;
-            clearInterval(gameClock);
-            const comment = document.getElementById("commentBottom");
-            comment.textContent = "一時停止中（スタートで再開）"
-        })
-
-
-        // --------------ここから：初期表示-------------------------------------------------
 
         const mainField = document.getElementById("main");
         for (let i = 0; i < 52; i++) {
@@ -287,10 +175,13 @@
             const frontImg = document.createElement("img");
             frontImg.src = "images/tramp3.png"; //伏せ画像（裏面画像）
             frontImg.className = "tImg";
-            frontImg.classList.add("cursor");
             tDiv.append(frontImg);
 
             // --------------ここまで：初期表示-------------------------------------------------
+
+            // .item(i)でhtmlCollection(表示順)のクラス指定
+            const tImgEl = document.getElementsByClassName("tImg");
+            const tDivEl = document.getElementsByClassName("card");
 
             //デバッグ用チートボタン1
             function cheat() {
@@ -300,10 +191,6 @@
                 }
             }
 
-            // .item(i)でhtmlCollection(表示順)のクラス指定
-            const tImgEl = document.getElementsByClassName("tImg");
-            const tDivEl = document.getElementsByClassName("card");
-
             // 終了判定　全部オープン時
             const checkFin = () => {
                 if (pair === 26) {
@@ -312,7 +199,6 @@
                     document.getElementById("footer").style.backgroundColor = "black";
                     document.getElementById("footer").style.color = "yellow";
                     goNext = 2;
-                    clearInterval(gameClock);
                 }
             }
 
@@ -346,8 +232,6 @@
 
                             tImgEl.item(choiceIdx[0]).setAttribute("src", "images/tramp3.png");
                             tImgEl.item(choiceIdx[1]).setAttribute("src", "images/tramp3.png");
-                            tImgEl.item(choiceIdx[0]).classList.add("cursor");
-                            tImgEl.item(choiceIdx[1]).classList.add("cursor");
                             comment.textContent = "次の1枚を選んでください。";
                             goNext = 0;
                         }, 5000);
@@ -363,32 +247,38 @@
 
                     if (count % 2 === 0) {
                         console.log("カウント" + count);
+                        // tDiv.style.backgroundColor = "red";//チェック用
                         choiceNum[0] = cardNum[j];
                         choiceIdx[0] = cardPosition.indexOf(j);//htmlCollectionのindex番号？
+                        // console.log("choiceNum0:" + choiceNum[0] + " choiceIdx0:" + choiceIdx[0]);
 
+                        // const tImgEl = document.getElementsByClassName("tImg");
                         tImgEl.item(choiceIdx[0]).setAttribute("src", "images/tramp2.png");
                         cardStates[i] = "c";
-                        tImgEl.item(choiceIdx[0]).classList.remove("cursor");
 
                         const comment = document.getElementById("commentBottom");
                         comment.textContent = "2枚目を選んでください。"
 
                     } else {
                         console.log("カウント" + count);
+                        // tDiv.style.backgroundColor = "blue";//チェック用
                         choiceNum[1] = cardNum[j];
                         choiceIdx[1] = cardPosition.indexOf(j);
+                        // console.log("choiceNum1:" + choiceNum[1] + " choiceIdx1:" + choiceIdx[1]);
 
+                        // const tImgEl = document.getElementsByClassName("tImg");
                         tImgEl.item(choiceIdx[1]).setAttribute("src", "images/tramp2.png");
                         cardStates[i] = "c";
-                        tImgEl.item(choiceIdx[1]).classList.remove("cursor");
+                        // カードオープン処理
 
+                        // console.log("choiceNum0" + choiceNum[0] + ":choiceNum1" + choiceNum[1])
                         goNext = 1;
                         checkPair();
                     }
 
-                    // -------------------top　状況表示--------------------------
+                    // top　状況表示
                     const topField = document.getElementById("score");
-                    topField.innerHTML = `現在のターン数：　${Math.floor(count / 2) + 1}ターン目<br>現在のペア数（成功数）：　${pair}組 / 26組`;
+                    topField.innerHTML = `現在のターン数：　${Math.floor(count / 2) + 1}ターン目<br>現在のペア数（成功数）：　${pair}組`;
 
                     // bottom　何か追加する気だった模様
                     const bottomField = document.getElementById("footer");

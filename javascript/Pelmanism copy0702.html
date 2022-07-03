@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: green;
+            color: black;
+        }
+
+        #main {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 110px;
+            margin-bottom: 110px;
+        }
+
+        /* 1枚の画像からposition指定でトランプを出す方法：調整がどうにもならないので却下
+        .card {
+            width: 110px;
+            height: 153px;
+            border: 1px solid #333;
+            margin: 3px;
+            text-align: center;
+        } */
+
+        .card {
+            width: 110px;
+            height: 165px;
+            /* border: 1px solid #333; */
+            margin: 5px;
+            text-align: center;
+            background-size: 100%;
+            margin-bottom: 20px;
+            /*後で要調整 */
+        }
+
+        .card img {
+            width: 110px;
+            height: 165px;
+            /* border: 1px solid #333; */
+            /* margin-top: -25px; */
+        }
+
+        #top {
+            position: fixed;
+            top: 5px;
+            left: 5px;
+            width: 95%;
+            height: 100px;
+            border: 1px solid black;
+            background-color: white;
+            opacity: 0.8;
+            padding: 10px;
+            font-weight: 800;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 40% 60%;
+
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 5px;
+            left: 5px;
+            width: 95%;
+            height: 100px;
+            border: 1px solid black;
+            background-color: white;
+            opacity: 0.8;
+            padding: 10px;
+        }
+
+        h1 {
+            margin: -8px 0;
+        }
+
+        #title {
+            grid-row: 1;
+            grid-column: 1;
+            border: 1px solid #333;
+        }
+
+        #timeCount {
+            grid-row: 1/3;
+            grid-column: 2;
+            border: 1px solid #333;
+        }
+
+        #score {
+
+            grid-row: 2;
+            grid-column: 1;
+            margin: 10px 0 0 20px;
+            border: 1px solid #333;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="top">
+        <div id="title">
+            <h1>神経衰弱</h1>
+        </div>
+        <div id="timeCount"></div>
+        <div id="score"></div>
+
+
+
+    </div>
+    <div id="main">
+
+    </div>
+    <div id="footer">
+        <div id="commentBottom">カードをクリックして開始してください。</div>
+        <div id="getPair"></div>
+
+    </div>
+    <script>
+
+        // const cardIndex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51];
+
+        // 0=伏せ状態、c(choice)=選択状態、s(success)=ペア完成状態　現状0とその他扱い
+        const cardStates = new Array(52).fill(0);
+
+        // 以下は0～51の商と余で出力できるがいちいちfor文とか面倒なので全部配列に
+        const cardNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        const cardName = ["spade1", "spade2", "spade3", "spade4", "spade5", "spade6", "spade7", "spade8", "spade9", "spade10", "spade11", "spade12", "spade13", "heart1", "heart2", "heart3", "heart4", "heart5", "heart6", "heart7", "heart8", "heart9", "heart10", "heart11", "heart12", "heart13", "dia1", "dia2", "dia3", "dia4", "dia5", "dia6", "dia7", "dia8", "dia9", "dia10", "dia11", "dia12", "dia13", "club1", "club2", "club3", "club4", "club5", "club6", "club7", "club8", "club9", "club10", "club11", "club12", "club13"];
+        const cardImgName = ["s0.png", "s1.png", "s2.png", "s3.png", "s4.png", "s5.png", "s6.png", "s7.png", "s8.png", "s9.png", "s10.png", "s11.png", "s12.png", "h0.png", "h1.png", "h2.png", "h3.png", "h4.png", "h5.png", "h6.png", "h7.png", "h8.png", "h9.png", "h10.png", "h11.png", "h12.png", "d0.png", "d1.png", "d2.png", "d3.png", "d4.png", "d5.png", "d6.png", "d7.png", "d8.png", "d9.png", "d10.png", "d11.png", "d12.png", "c0.png", "c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png", "c7.png", "c8.png", "c9.png", "c10.png", "c11.png", "c12.png"];
+
+        //乱数配列生成
+        const cardPosition = new Array();
+        for (i = 0; i < 52; i++) {
+            tempNum = Math.floor(Math.random() * 52);
+            if (!cardPosition.includes(tempNum)) {
+                cardPosition.push(tempNum);
+                // console.log(i+"回目　<-" + tempNum)　//デバッグ用
+            } else {
+                i--;
+            }
+        }
+
+        // デバッグ用
+        // console.log("cardNum " + cardNum);
+        // console.log("cardName " + cardName);
+        // console.log("cardImgName " + cardImgName);
+        // console.log("cardPosition " + cardPosition);
+        // console.log("cardPosition.len " + cardPosition.length);
+
+
+        let count = 0;
+        let pair = 0;
+        let goNext = 0;
+
+        let choiceNum = new Array(2);
+        let choiceIdx = new Array(2);
+
+
+
+
+
+
+        const mainField = document.getElementById("main");
+        for (let i = 0; i < 52; i++) {
+
+            // backgroundimage付div作成
+            const tDiv = document.createElement("div");
+            tDiv.className = "card";
+            let j = cardPosition[i];
+            //cardPosition=8（i=8,乱数が7）だった場合、
+            // 他テーブルの8番目（cardNum=7,cardName=spade7,cardImgName=s7.png）をjで呼び出す
+            // console.log(i + "枚目：j＝ " + j);//デバッグ用
+            // tDiv.textContent = cardNum[j] + 1;//デバッグ用
+            // tDiv.textContent = cardName[j];//デバッグ用
+            tDiv.style.backgroundImage = `url(images/${cardImgName[j]})`;
+            mainField.append(tDiv);
+
+            // //1枚の画像からposition指定でトランプを出す方法：調整に時間が必要なので却下-----
+            // tDiv.style.backgroundImage = 'url(tramp.png)';
+            // // 色々微調整した結果
+            // tDiv.style.backgroundSize = '1300%';
+            // // 何列目か
+            // const col = Math.floor(cardPosition[i] % 13);
+            // // 何段目か
+            // const row = Math.floor(cardPosition[i] / 13);
+            // // 背景画像をズラす大きさ（px)
+            // const x = -(8 + 109 * col);
+            // const y = -(8 + 160 * row);
+            // // テンプレートリテラルを使って、変数から文字列を作る
+            // tDiv.style.backgroundPosition = `${x}px ${y}px`;
+            // mainField.append(tDiv);
+            // // ----------------------------------------------------------------------------
+
+            // 生成した　div に　image　設置（蓋画像）
+            const frontImg = document.createElement("img");
+
+            frontImg.src = "images/tramp3.png"; //伏せ画像（裏面画像）
+            frontImg.className = "tImg";
+
+            tDiv.append(frontImg);
+
+            // --------------ここまで：初期表示-------------------------------------------------
+
+            // .item(i)でhtmlCollection(表示順)のクラス指定
+            const tImgEl = document.getElementsByClassName("tImg");
+            const tDivEl = document.getElementsByClassName("card");
+
+            tDiv.addEventListener("click", () => {
+                // let j = cardPosition[tDiv];
+
+                if (cardStates[i] === 0 && goNext===0) {
+
+                    if (count % 2 === 0) {
+                        console.log("ターン：カウント" + count);
+                        // tDiv.style.backgroundColor = "red";//チェック用
+                        choiceNum[0] = cardNum[j];
+                        choiceIdx[0] = cardPosition.indexOf(j);//htmlCollectionのindex番号？
+                        // console.log("choiceNum0:" + choiceNum[0] + " choiceIdx0:" + choiceIdx[0]);
+
+                        // const tImgEl = document.getElementsByClassName("tImg");
+                        tImgEl.item(choiceIdx[0]).setAttribute("src", "images/tramp2.png");
+                        cardStates[i] = "c";
+
+                        const comment = document.getElementById("commentBottom");
+                        comment.textContent = "2枚目を選んでください。"
+
+                    } else {
+                        console.log("ターン：カウント" + count);
+                        // tDiv.style.backgroundColor = "blue";//チェック用
+                        choiceNum[1] = cardNum[j];
+                        choiceIdx[1] = cardPosition.indexOf(j);
+                        // console.log("choiceNum1:" + choiceNum[1] + " choiceIdx1:" + choiceIdx[1]);
+
+                        // const tImgEl = document.getElementsByClassName("tImg");
+                        tImgEl.item(choiceIdx[1]).setAttribute("src", "images/tramp2.png");
+                        cardStates[i] = "c";
+                        // カードオープン処理
+
+                        // console.log("choiceNum0" + choiceNum[0] + ":choiceNum1" + choiceNum[1])
+
+                        if (choiceNum[0] === choiceNum[1]) {
+                            console.log("揃ったわ");
+                            const comment = document.getElementById("commentBottom");
+                            comment.textContent = "成功！　次の1枚を選んでください。"
+
+                            
+
+                            tDivEl.item(choiceIdx[0]).style.backgroundColor = "black";
+                            tDivEl.item(choiceIdx[1]).style.backgroundColor = "black";
+
+                            cardStates[choiceIdx[0]] = "s";
+                            cardStates[choiceIdx[1]] = "s";
+
+                            tImgEl.item(choiceIdx[0]).setAttribute("src", "images/tramp0.png");
+                            tImgEl.item(choiceIdx[1]).setAttribute("src", "images/tramp0.png");
+
+
+
+
+                            pair++;
+
+
+                            // 数秒まって次の選択に
+
+                        } else {
+                            console.log("揃ってないわ");
+                            const comment = document.getElementById("commentBottom");
+                            comment.textContent = "失敗！　次の1枚を選んでください。"
+
+                            tDivEl.item(choiceIdx[0]).style.backgroundColor = "green";
+                            tDivEl.item(choiceIdx[1]).style.backgroundColor = "green";
+
+                            cardStates[choiceIdx[0]] = 0;
+                            cardStates[choiceIdx[1]] = 0;
+
+                            tImgEl.item(choiceIdx[0]).setAttribute("src", "images/tramp3.png");
+                            tImgEl.item(choiceIdx[1]).setAttribute("src", "images/tramp3.png");
+
+
+
+                            // 5秒くらい(；´д｀)ノ ﾏｯﾃｪｪｪ次のターンに
+
+
+                        }
+                    }
+
+                    if (pair === 26) {
+                        const comment = document.getElementById("commentBottom");
+                        comment.textContent = "終了！　全てのカードがオープンされました。"
+                    }
+
+                    // top
+                    const topField = document.getElementById("score");
+                    topField.innerHTML = `現在のターン数：　${Math.floor(count / 2) + 1}ターン<br>現在のペア数（成功数）：　${pair}組`;
+                    count++;
+
+                    // bottom
+                    const bottomField = document.getElementById("footer");
+
+
+
+
+
+                }
+
+            })
+
+        }
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
