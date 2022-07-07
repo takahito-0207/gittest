@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .board {
+            margin: 100px auto 0 auto;
+            width: 600px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .board div {
+            border: solid 1px black;
+            width: 200px;
+            height: 200px;
+            font-size: 100px;
+            text-align: center;
+            line-height: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+    </div>
+</body>
+<script>
+    // 現在の手番をチェックする
+    let count = 0;
+
+    // ゲームが終了したかを表すフラグ
+    let flag = false;
+
+    // 現在のゲームの進行状況を保存する配列
+    const gameArray = new Array(9).fill(0);
+
+    // 三つの値が一致しているかをチェックする関数 booleanを返す
+    // 引数として要素が３つの配列を受け取る
+    const checkSame = (array) => {
+        const a = gameArray[array[0]];//checkArrayの[0]桁目をindex番号として使用
+        const b = gameArray[array[1]];//checkArrayの[1]桁目をindex番号として使用
+        const c = gameArray[array[2]];//checkArrayの[2]桁目をindex番号として使用
+
+        if ([a, b, c].every(value => value !== 0)) {
+            return a === b && a === c;
+        }
+    }
+
+    // チェックするべき縦横斜めの組み合わせを記録した配列
+    const checkArray = [
+        //  [0][1][2]　桁目として扱うためにcheckSameに送ってる 
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    const checkWinner = (player) => {
+        //   const checkBoard = checkArray.map(array => checkSame(array)).includes(true)
+        let len = checkArray.length;
+        for (i = 0; i < len; i++) {
+            const checkBoard = checkSame(checkArray[i]);
+
+            if (checkBoard) {
+                flag = true;
+                console.log(player + "の勝ち!");
+            }
+        }
+    }
+
+    const board = document.querySelector('.board')
+
+    // board要素の中にdivを9個作る
+    for (let i = 0; i < 9; i++) {
+        const masu = document.createElement('div');
+        // 作ったdiv要素にイベントを追加
+        masu.addEventListener('click', () => {
+
+            // すでにクリックしていないマスであるかつゲームが続いていることを確認
+            if (gameArray[i] === 0 && flag === false) {
+
+                if (count % 2 === 0) {
+                    masu.textContent = "◯";
+                    gameArray[i] = "◯";
+                    checkWinner("◯")
+                } else {
+                    masu.textContent = "×";
+                    gameArray[i] = "×";
+                    checkWinner("×")
+                }
+                count++;
+
+            }
+        })
+        board.append(masu)
+    }
+</script>
+
+</html>
