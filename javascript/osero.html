@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オセロ</title>
+
+    <style>
+        #content {
+            display: grid;
+            grid-template-columns: repeat(8, 60px);
+            grid-template-rows: repeat(8, 60px);
+
+
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #333;
+            background-color: green;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        .w {
+            color: white;
+            font-size: 60px;
+        }
+
+        .b {
+            color: black;
+            font-size: 60px;
+        }
+
+        #score {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #score div {
+            width: 239px;
+            height: 100px;
+            border: 1px solid #999;
+            text-align: center;
+            line-height: 110px;
+            font-size: 100px;
+        }
+
+        .scoreWhite {
+            background-color: white;
+            color: black;
+        }
+
+        .scoreBlack {
+            background-color: black;
+            color: white;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="content"></div>
+    <div id="messege"></div>
+    <div id="score"></div>
+
+
+    <script>
+
+        let turn = 0;
+        let mineColor;
+        let enemyColor;
+
+        const stone = new Array(8);
+        for (let x = 0; x < 8; x++) {
+            stone[x] = new Array(8);
+        }
+
+        let num = 0;
+        for (let x = 0; x < 8; x++) {
+            for (let y = 0; y < 8; y++) {
+                // stone[x][y] = num;
+                // num ++;
+                stone[x][y] = x +"-"+y;
+            }
+        }
+        //0:無配置、1：配置可能、w/b:それぞれ取得
+        console.log(stone)
+
+        const checkChange = new Array(64);
+        for (let x = 0; x < 64; x++) {
+            checkChange[x] = new Array(1);
+        }
+        console.log(checkChange)
+
+
+        // 点数----------------------------------------------
+        const counter = (player) => {
+            let sumScore = stone.filter(value => value === player).length;
+            return sumScore;
+        }
+
+        const checkScore = () => {
+
+            // const messege = document.getElementById("messege");
+            // if (turn === 0) {
+            //     messege.textContent = "黒からスタートです";
+            // } else if (turn % 2 === 0) {
+            //     messege.textContent = "次は白です";
+            // } else {
+            //     messege.textContent = "次は黒です";
+            // }
+
+            const score = document.getElementById("score");
+            score.textContent = "";//質問部分
+
+            const score0 = document.createElement("div");
+            score0.className = "scoreWhite";
+            score0.textContent = counter("w");
+            const score1 = document.createElement("div");
+            score1.className = "scoreBlack";
+            score1.textContent = counter("b");
+
+            score.append(score1);
+            score.append(score0);
+        }
+        // 点数ここまで----------------------------------------
+
+        // // xは配列checkChangeのindex、iは対象cellの番号、
+
+        // for (let x = 0; x < 64; x++) {
+        //     if (turn % 2 === 0) {
+        //         mineColor = "b";
+        //         enemyColor = "w";
+        //     } else {
+        //         mineColor = "w";
+        //         enemyColor = "b";
+        //     }
+
+        //     if (stone[x] === 0) {
+
+        //         const checkRight = () => {
+        //             let colMax =Math.floor(x / 8) * 8 + 7;
+        //             let len = colmax -x;
+        //             if (x < Math.floor(x / 8) * 8 + 7) {
+
+
+
+        //                  if (stone[x + ] === enemyColor) {
+        //                     checkChange.push( x + i);
+        //                     i++;
+        //                     checkRight();
+        //                 }
+
+        //             }
+        //         }
+        //     }
+
+
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //     let checkRight=()=>{
+        // if(zzz>= Math.floor(x/8)*8 && zzz<= Math.floor(x/8)*8+7){
+        //     if(stone[zzz+1]===enemyColor){
+        //         checkChange.push(zzz+1);
+        //         zzz++;
+        //         checkChange();
+        //     }
+
+        // }
+        // }
+
+
+
+        // 盤面作成-------------------------------------
+        const borad = document.getElementById("content");
+        for (let i = 0; i < 64; i++) {
+            const divEl = document.createElement("div");
+            divEl.className = "cell";
+
+            // 盤面作成ここまで-------------------------------------
+            // const cellEl = document.querySelectorAll(".cell");
+            // divEl.textContent = cellEl;
+
+
+
+
+
+
+            // セル取得動作
+            const getCell = (playerColor) => {
+                divEl.textContent = "●";
+                divEl.classList.add(playerColor);
+                stone[i] = playerColor;
+            }
+
+            //開始時
+            if (i === 28 || i === 35) {
+                getCell("b");
+            } else if (i === 27 || i === 36) {
+                getCell("w");
+            }
+            checkScore();
+
+            // クリック時
+            const choiceCell = divEl.addEventListener("click", () => {
+                if (stone[i] === 0) {
+                    if (turn % 2 === 0) {
+                        getCell("b");
+                    } else {
+                        getCell("w");
+                    }
+                    checkScore();
+                    turn++;
+                    console.log(stone)
+                }
+            });
+
+
+
+
+            borad.append(divEl);
+
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
