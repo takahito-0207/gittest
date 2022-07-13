@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        function testC(n) {
+            console.log('Hello');
+
+            if (n != 0) {
+                //    testD(n - 1);
+            }
+
+            console.log('Bye');
+        }
+
+
+        function testB(n) {
+            console.log('Hello');
+
+            if (n != 0) {
+                testC(n - 1);
+            }
+
+            console.log('Bye');
+        }
+
+        function testA(n) {
+            console.log('Hello');
+
+            if (n != 0) {
+                testB(n - 1);
+            }
+
+            console.log('Bye');
+        }
+
+        testA(2);
+
+    </script>
+</body>
+
+</html>

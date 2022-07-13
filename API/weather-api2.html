@@ -7,23 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
-<style>
-    #dataField{
-        width: 500px;
-        height: 500px;
-        border: 1px solid #666;
-        margin: 10px;
-    }
-</style>
+    <style>
+        #dataField {
+            width: 500px;
+            height: 500px;
+            /* border: 1px solid #666; */
+            margin: 10px;
+        }
+        #dataField div{
+            border-bottom: 1px solid #333;
+        }
+
+    </style>
 </head>
 
 <body>
 
 
-    <div id="dataField"></div>
-    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json")' type="button">奈良</button>
-    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json")' type="button">大阪</button>
-    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/260000.json")' type="button">京都</button>
+    <div id="dataField">
+
+        <div id="publishingOffice"></div>
+        <div id="reportDatetime"></div>
+        <div id="targetArea"></div>
+        <div id="headlineText"></div>
+        <div id="text"></div>
+
+    </div>
+
+
+    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json")'
+        type="button">奈良</button>
+    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json")'
+        type="button">大阪</button>
+    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/260000.json")'
+        type="button">京都</button>
 
     <!-- <button id="random" onclick="random47()" type="button">????</button> -->
 </body>
@@ -35,7 +52,7 @@
     // let dokoka = ("00" + Math.floor(Math.random() * 47)).slice(-2);
     // console.log(dokoka);
     // const url_Tokyo = 'https://www.jma.go.jp/bosai/forecast/data/overview_forecast/${dokoka}0000.json';
-   
+
     // お題の為にコメントアウト
     // let url_Tokyo = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json"
 
@@ -86,9 +103,9 @@
 
     // }
     // getData()
-        // お題の為にコメントアウト　ここまで
+    // お題の為にコメントアウト　ここまで
 
-const choicePos= async(urlPos)=>{
+    const choicePos = async (urlPos) => {
 
         // 全データがここに入っている
         const data = await getWeather(urlPos);
@@ -98,27 +115,38 @@ const choicePos= async(urlPos)=>{
         console.log(data.publishingOffice);
         console.log(data.reportDatetime);
         console.log(data.targetArea);
-        console.log(data.tomorrow);
-        console.log(data.dayAfterTomorrow);
-
-
 
         // console.log(data.text);
 
 
         // ここでデータを表示(div作成）しないと、非同期処理準備前に実行してしまう
-        const div = document.createElement("div");
-        div.textContent=data.publishingOffice;
-        div.textContent=data.reportDatetime;
-        div.textContent =data.targetArea;
         
-        div.textContent = data.text;
+        const flgmntEl = document.createDocumentFragment();
+        
+        const div0 = document.createElement("div");
+        div0.textContent = "データ配信元 " + data.publishingOffice;
 
-        document.querySelector("#dataField").textContent="";
-        document.querySelector("#dataField").append(div);
+        const div1 = document.createElement("div");
+        div1.textContent = "報告日時 " + data.reportDatetime;
+
+        const div2 = document.createElement("div");
+        div2.textContent = "対象地域 " + data.targetArea;
+
+        const div3 = document.createElement("div");
+        div3.textContent = "ヘッドライン " + data.headlineText;
+
+        const div4 = document.createElement("div");
+        div4.textContent = "詳細 " + data.text;
+
+        // document.getElementById("dataField").textContent = "";
+        document.getElementById("publishingOffice").append(div0);
+        document.getElementById("reportDatetime").append(div1);
+        document.getElementById("targetArea").append(div2);
+        document.getElementById("headlineText").append(div3);
+        document.getElementById("text").append(div4);
         // document.querySelector("body").replaceChildren(div);
 
-}
+    }
 
 
 </script>
