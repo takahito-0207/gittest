@@ -5,35 +5,72 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>天気予報API 実験</title>
 
     <style>
         #dataField {
-            width: 500px;
+            width: 640px;
             height: 500px;
-            /* border: 1px solid #666; */
+            border: 1px solid #666;
             margin: 10px;
         }
-        #dataField div{
+
+        #publishingOffice,
+        #reportDatetime,
+        #headlineText {
             border-bottom: 1px solid #333;
+            height: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            padding-left: 10px;
+            background-color: silver;
         }
 
+
+        #targetArea {
+            border-bottom: 1px solid #333;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            font-weight: 600;
+            padding-left: 10px;
+        }
+
+        #text {
+            font-size: 16px;
+            padding-top: 20px;
+            padding: 10px;
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+            background-color: lightblue;
+            border: 1px solid blue;
+            border-radius: 5px/5px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+
+        }
+
+        button:hover {
+            background-color: blue;
+            color: white;
+
+        }
     </style>
 </head>
 
 <body>
 
-
     <div id="dataField">
-
+        <div id="targetArea"></div>
         <div id="publishingOffice"></div>
         <div id="reportDatetime"></div>
-        <div id="targetArea"></div>
         <div id="headlineText"></div>
         <div id="text"></div>
-
     </div>
-
 
     <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json")'
         type="button">奈良</button>
@@ -42,21 +79,15 @@
     <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/260000.json")'
         type="button">京都</button>
 
-    <!-- <button id="random" onclick="random47()" type="button">????</button> -->
+    <button id="random" onclick="choicePos(random47())" type="button">????</button>
 </body>
 <script>
     // API配信のURL
     // 130000は東京のエリアコード
     // let url_Tokyo = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json"
 
-    // let dokoka = ("00" + Math.floor(Math.random() * 47)).slice(-2);
-    // console.log(dokoka);
-    // const url_Tokyo = 'https://www.jma.go.jp/bosai/forecast/data/overview_forecast/${dokoka}0000.json';
-
     // お題の為にコメントアウト
     // let url_Tokyo = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json"
-
-
 
 
     const getWeather = async (url) => {
@@ -109,34 +140,32 @@
 
         // 全データがここに入っている
         const data = await getWeather(urlPos);
-        console.log(data);
+        // console.log(data);
 
         // データのキーを指定
-        console.log(data.publishingOffice);
-        console.log(data.reportDatetime);
+        // console.log(data.publishingOffice);
+        // console.log(data.reportDatetime);
         console.log(data.targetArea);
 
         // console.log(data.text);
 
 
         // ここでデータを表示(div作成）しないと、非同期処理準備前に実行してしまう
-        
-        const flgmntEl = document.createDocumentFragment();
-        
+
         const div0 = document.createElement("div");
-        div0.textContent = "データ配信元 " + data.publishingOffice;
+        document.getElementById("publishingOffice").textContent = "データ配信元 " + data.publishingOffice;
 
         const div1 = document.createElement("div");
-        div1.textContent = "報告日時 " + data.reportDatetime;
+        document.getElementById("reportDatetime").textContent = "報告日時 " + data.reportDatetime;
 
         const div2 = document.createElement("div");
-        div2.textContent = "対象地域 " + data.targetArea;
+        document.getElementById("targetArea").textContent = data.targetArea + " の 天気";
 
         const div3 = document.createElement("div");
-        div3.textContent = "ヘッドライン " + data.headlineText;
+        document.getElementById("headlineText").textContent = "ヘッドライン " + data.headlineText;
 
         const div4 = document.createElement("div");
-        div4.textContent = "詳細 " + data.text;
+        document.getElementById("text").textContent = "詳細 " + data.text;
 
         // document.getElementById("dataField").textContent = "";
         document.getElementById("publishingOffice").append(div0);
@@ -148,6 +177,11 @@
 
     }
 
+    const random47 = () => {
+        let dokoka = ("00" + Math.floor(Math.random() * 47)).slice(-2);
+        const urlRandom = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/" + dokoka + "0000.json";
+        return urlRandom;
+    }
 
 </script>
 
