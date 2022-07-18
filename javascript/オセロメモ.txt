@@ -1,0 +1,43 @@
+オセロメモ
+
+・配列を空にする
+array1.length = 0;
+// 配列の長さを０にする
+
+array1 = [];
+// 配列をサイズゼロの新しい配列に設定する（厳密には別の配列（インスタンス）となる）
+
+チェック方法
+if(array1.length == 0) {
+    // 配列が空だった場合の処理
+  }
+
+・配列を結合する（A+B）
+
+// concat おそらく求めるもの
+let array_base = ['blue', 'green', 'yellow'];
+let array_add = ['red', 'white'];
+let result_concat = array_base.concat(array_add);
+console.log(result_concat);
+//console.log
+0:"blue"
+1:"green"
+2:"yellow"
+3:"red"
+4:"white"
+
+//push 配列のまま追加される
+let array_base = ['blue', 'green', 'yellow'];
+let array_add = ['red', 'white'];
+let result_assign = Object.assign(array_base, array_add);
+console.log(result_assign);
+//console.log
+["blue", "green", "yellow", Array(2)]
+0:"blue"
+1:"green"
+2:"yellow"
+3:(2) ["red", "white"]
+
+.map の説明
+https://www.sejuku.net/blog/21812
+

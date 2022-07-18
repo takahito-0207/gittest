@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+<style>
+    #dataField{
+        width: 500px;
+        height: 500px;
+        border: 1px solid #666;
+        margin: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+
+    <div id="dataField"></div>
+    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json")' type="button">奈良</button>
+    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/270000.json")' type="button">大阪</button>
+    <button onclick='choicePos( "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/260000.json")' type="button">京都</button>
+
+    <!-- <button id="random" onclick="random47()" type="button">????</button> -->
+</body>
+<script>
+    // API配信のURL
+    // 130000は東京のエリアコード
+    // let url_Tokyo = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json"
+
+    // let dokoka = ("00" + Math.floor(Math.random() * 47)).slice(-2);
+    // console.log(dokoka);
+    // const url_Tokyo = 'https://www.jma.go.jp/bosai/forecast/data/overview_forecast/${dokoka}0000.json';
+   
+    // お題の為にコメントアウト
+    // let url_Tokyo = "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/290000.json"
+
+
+
+
+    const getWeather = async (url) => {
+
+        // 指定したurlのAPIからjsonデータを取得
+        const response = await fetch(url)
+
+        // jsonデータをオブジェクトに変換する
+        return response.json()
+    }
+
+    // async 非同期処理を含む関数につける
+    // await async関数の中で非同期な処理につける目印
+    // fetch() 指定した場所（URL)からデータを取得する非同期処理の関数
+
+    // 注意点
+    // fetch().then(------)のコードは、古い書き方（P405）
+
+    // 非同期処理で取得したデータは、その後の関数の中で利用する
+    // 今回だとgetWeather(データを取得する非同期処理) ＝＞ getData（データを利用する非同期処理）
+    // getdata はasyncをつけて非同期にしておかないとデータを取得する前に実行してしまう
+
+
+    // お題の為にコメントアウト
+    // const getData = async () => {
+
+    //     // 全データがここに入っている
+    //     const data = await getWeather(url_Tokyo);
+    //     console.log(data);
+
+    //     // データのキーを指定
+    //     console.log(data.publishingOffice);
+    //     console.log(data.reportDatetime);
+    //     console.log(data.targetArea);
+    //     console.log(data.text);
+
+
+    //     // ここでデータを表示(div作成）しないと、非同期処理準備前に実行してしまう
+    //     const div = document.createElement("div");
+    //     div.textContent = data.text;
+
+    //     document.querySelector("body").append(div);
+
+
+    // }
+    // getData()
+        // お題の為にコメントアウト　ここまで
+
+const choicePos= async(urlPos)=>{
+
+        // 全データがここに入っている
+        const data = await getWeather(urlPos);
+        console.log(data);
+
+        // データのキーを指定
+        console.log(data.publishingOffice);
+        console.log(data.reportDatetime);
+        console.log(data.targetArea);
+        console.log(data.tomorrow);
+        console.log(data.dayAfterTomorrow);
+
+
+
+        // console.log(data.text);
+
+
+        // ここでデータを表示(div作成）しないと、非同期処理準備前に実行してしまう
+        const div = document.createElement("div");
+        div.textContent=data.publishingOffice;
+        div.textContent=data.reportDatetime;
+        div.textContent =data.targetArea;
+        
+        div.textContent = data.text;
+
+        document.querySelector("#dataField").textContent="";
+        document.querySelector("#dataField").append(div);
+        // document.querySelector("body").replaceChildren(div);
+
+}
+
+
+</script>
+
+</html>
