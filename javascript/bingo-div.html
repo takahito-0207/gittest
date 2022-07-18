@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #main {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            grid-template-rows: repeat(5, 60px);
+            gap: 5px;
+            grid-auto-flow: column;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid blue;
+            width: 320px;
+            background-color: rgb(241, 241, 241);
+            border-radius: 5%;
+        }
+
+        #endGameMain {
+            background-color: #333;
+        }
+
+        .box {
+            border: 1px solid #333;
+            text-align: center;
+            line-height: 60px;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+        .box:hover {
+            background-color: cornsilk;
+        }
+
+        .getBox {
+            background-color: blue;
+            border-radius: 30%;
+            text-align: center;
+            line-height: 60px;
+            color: aliceblue;
+        }
+
+        .bingoBox {
+            background-color: rgb(255, 194, 81);
+            border-radius: 30%;
+            text-align: center;
+            line-height: 60px;
+            color: black;
+            font-weight: bold;
+            border: 2px solid orangered;
+        }
+
+        #lot {
+            width: 300px;
+            margin: 20px 0 20px 40px;
+            text-align: center;
+            height: 50px;
+            font-size: 30px;
+            color: aliceblue;
+            background-color: coral;
+            border: 1px solid rgb(131, 49, 40);
+            border-radius: 10%/50%;
+
+        }
+
+
+        .endgame {
+            width: 300px;
+            height: 50px;
+            font-size: 30px;
+            color: black;
+            background-color: yellow;
+            border: 4px solid black;
+        }
+
+
+        #lotNumGroup {
+            display: flex;
+            width: 300px;
+
+        }
+
+        header div {
+            width: 320px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin: 0 20px;
+            padding: 0 10px;
+            font-size: 26px;
+        }
+
+        #top2 {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <div id="top">ビンゴ</div>
+    </header>
+    <div id="main">
+    </div>
+
+    <div id="lot">抽選</div>
+
+    <div id="lotNumGroup"></div>
+
+    <script>
+        // ビンゴ判定用配列
+        // 一致用配列
+        let hitBox = new Array(25).fill(0);//1：取得、0：未抽選
+        let bngCount = 0; // 抽選回数
+
+        // ビンゴの数字割り当て
+        let bingoNumAry = new Array(); // 25個の乱数0～75の入れ物
+
+        let tempNum;        // これ追加。定義していなかったので自動的にvarになってた
+
+        function bingoNum(min, max) {
+            tempNum = Math.floor(Math.random() * (max + 1 - min)) + min;
+            if (!bingoNumAry.includes(tempNum)) {
+                bingoNumAry.push(tempNum);
+            } else {
+                bingoNum(min, max);
+            }
+        }
+
+        for (let i = 0; i < 25; i++) {
+            if (i === 12) {
+                bingoNumAry[12] = "Free";
+            }
+            else if (i < 5) {
+                bingoNum(0, 15);
+            }
+            else if (i >= 5 && i < 10) {
+                bingoNum(16, 30);
+            }
+            else if (i >= 10 && i < 15) {
+                bingoNum(31, 45);
+            }
+            else if (i >= 15 && i < 20) {
+                bingoNum(46, 60);
+            }
+            else if (i >= 20) {
+                bingoNum(61, 75);
+            }
+        }
+        console.log("bingoNumAry " + bingoNumAry);
+
+        // 25マス表示作成--------------------------------------------------------------
+        for (let i = 0; i < 25; i++) {
+            const mainBoard = document.getElementById("main");
+
+            const boxEl = document.createElement("div");
+            boxEl.className = "box";
+
+            boxEl.textContent = bingoNumAry[i];
+            // boxEl.textContent = i;
+
+            mainBoard.append(boxEl);
+        }
+        // 表示作成 尾張--------------------------------------------------------------
+
+        // 抽選 -> 番号を配列に
+        // 抽選数用配列
+        let lotNum = new Array();
+        let getNumber;                      // これ追加。定義していなかったので自動的にvarになってた
+        let gameEnd = 0;
+
+        let boxNum = document.querySelectorAll(".box");
+
+        // 真ん中処理
+        hitBox[12] = 1;
+        boxNum[12].setAttribute("class", "getBox");
+        boxNum[12].textContent = "free";
+
+        // 抽選ボタン　～　終了処理
+
+        // 抽選クリック　ー　数字確定(やり方はwhileか再帰関数)
+        if (gameEnd === 0) {
+            let bingoBtn = document.getElementById("lot");
+            bingoBtn.addEventListener("click", () => {
+
+                while (true) {
+                    getNumber = Math.floor(Math.random() * (75 + 1 - 0)) + 0;
+                    // console.log("getNumber" + getNumber)
+                    if (lotNum.includes(getNumber)) {
+                        console.log(" ------------------ やり直し " + getNumber);
+                    } else {
+                        bngCount++;
+                        console.log(bngCount + "回目 getNumber　" + getNumber);
+                        lotNum.push(getNumber);
+                        console.log("lotNum  " + lotNum);
+                        break;
+                    }
+                }
+
+
+                // 抽選数表示
+                const gotNumbers = document.getElementById("lotNumGroup");
+                const topTxt = document.getElementById("top");
+                topTxt.textContent = bngCount + "回目：" + getNumber;
+                gotNumbers.textContent = lotNum;
+
+                // 終了判定
+                function finale() {
+                    //縦
+                    bingoRow1 = [hitBox[0], hitBox[1], hitBox[2], hitBox[3], hitBox[4]];
+                    bingoRow2 = [hitBox[5], hitBox[6], hitBox[7], hitBox[8], hitBox[9]];
+                    bingoRow3 = [hitBox[10], hitBox[11], hitBox[12], hitBox[13], hitBox[14]];
+                    bingoRow4 = [hitBox[15], hitBox[16], hitBox[17], hitBox[18], hitBox[19]];
+                    bingoRow5 = [hitBox[20], hitBox[21], hitBox[22], hitBox[23], hitBox[24]];
+                    // 横
+                    bingoCol1 = [hitBox[0], hitBox[5], hitBox[10], hitBox[15], hitBox[20]];
+                    bingoCol2 = [hitBox[1], hitBox[6], hitBox[11], hitBox[16], hitBox[21]];
+                    bingoCol3 = [hitBox[2], hitBox[7], hitBox[12], hitBox[17], hitBox[22]];
+                    bingoCol4 = [hitBox[3], hitBox[8], hitBox[13], hitBox[18], hitBox[23]];
+                    bingoCol5 = [hitBox[4], hitBox[9], hitBox[14], hitBox[19], hitBox[24]];
+                    // 斜め
+                    bingoX1 = [hitBox[0], hitBox[6], hitBox[12], hitBox[18], hitBox[24]];
+                    bingoX2 = [hitBox[4], hitBox[8], hitBox[12], hitBox[16], hitBox[20]];
+
+                    function checkFin(checkBingo, line) {
+                        if (checkBingo.every(varue => varue === 1)) {
+                            console.log("line : " + line);
+                            document.getElementById("top").textContent = "ビンゴ！ (" + bngCount + "回目)";
+                            document.getElementById("top").setAttribute("id", "top2")
+                            bingoBtn.textContent = "終了！";
+                            gameEnd = 1;
+                            console.log(gameEnd);
+                        }
+                    }
+                    checkFin(bingoRow1, "1");
+                    checkFin(bingoRow2, "2");
+                    checkFin(bingoRow3, "3");
+                    checkFin(bingoRow4, "4");
+                    checkFin(bingoRow5, "5");
+                    checkFin(bingoCol1, "6");
+                    checkFin(bingoCol2, "7");
+                    checkFin(bingoCol3, "8");
+                    checkFin(bingoCol4, "9");
+                    checkFin(bingoCol5, "10");
+                    checkFin(bingoX1, "11");
+                    checkFin(bingoX2, "12");
+
+                }
+
+                // 一致処理
+                //bingoNumAryとlotNumを比べて一致時hitboxに1入れて色変える、その後終了判定する
+                for (let j = 0; j < 25; j++) {
+                    if (bingoNumAry[j] === getNumber) {
+                        hitBox[j] = 1;
+                        console.log("hitBox  " + hitBox);
+                        boxNum[j].style.backgroundColor = "blue";
+                        boxNum[j].style.color = "white";
+                        finale();
+
+                    }
+                }
+
+
+
+            })
+        }
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>

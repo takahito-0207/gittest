@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+    #container {
+        background-color: white;
+        border: dotted 2px aqua;
+        width: 710px;
+        height: 670px;
+        display: flex;
+        float: left;
+    }
+
+    .con1,
+    .con2,
+    .con3,
+    .con4,
+    .con5,
+    .free {
+        width: 100px;
+        height: 100px;
+        background-color: aquamarine;
+        border-radius: 50%;
+        margin: 10px;
+        padding: 10px;
+        color: white;
+        font-size: 40px;
+        text-align: center;
+
+    }
+
+</style>
+
+<body>
+    <header>
+        <div id="top">ビンゴゲーム</div>
+    </header>
+
+    <div id="container">
+        <div id="block1">
+            <div class="con1"></div>
+            <div class="con1"></div>
+            <div class="con1"></div>
+            <div class="con1"></div>
+            <div class="con1"></div>
+        </div>
+        <div id="block2">
+            <div class="con2"></div>
+            <div class="con2"></div>
+            <div class="con2"></div>
+            <div class="con2"></div>
+            <div class="con2"></div>
+        </div>
+        <div id="block3">
+            <div class="con3"></div>
+            <div class="con3"></div>
+            <div class="free">FREE</div>
+            <div class="con3"></div>
+            <div class="con3"></div>
+        </div>
+        <div id="block4">
+            <div class="con4"></div>
+            <div class="con4"></div>
+            <div class="con4"></div>
+            <div class="con4"></div>
+            <div class="con4"></div>
+        </div>
+        <div id="block5">
+            <div class="con5"></div>
+            <div class="con5"></div>
+            <div class="con5"></div>
+            <div class="con5"></div>
+            <div class="con5"></div>
+        </div>
+    </div>
+<footer>
+    <div id="button">
+        <p id="count">回数</p>
+        <p id="lotNum">数</p>
+        <p id="lotNumBox">収納庫</p>
+        <button id="lotButton" type="button">抽選</button>
+    </div>
+</footer>
+</body>
+
+
+<script src="bingo.js"></script>
+
+</html>

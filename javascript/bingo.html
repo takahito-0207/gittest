@@ -167,6 +167,9 @@
         let bingoNumAry = new Array(); // 25個の乱数0～75の入れ物
 
         // 25個の乱数割り当て関数 ！でelseifをifで処理すれば上いらない＆謎のi挙動
+
+        let tempNum;                    // これ追加。定義していなかったので自動的にvarになってた
+
         function bingoNum(min, max) {
             tempNum = Math.floor(Math.random() * (max + 1 - min)) + min;
             if (!bingoNumAry.includes(tempNum)) {
@@ -228,6 +231,7 @@
         // 抽選 -> 番号を配列に
         // 抽選数用配列
         let lotNum = new Array();
+        let getNumber;                      // これ追加。定義していなかったので自動的にvarになってた
 
         // 抽選ボタン　～　終了処理
 
